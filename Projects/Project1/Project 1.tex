@@ -1,0 +1,78 @@
+\documentclass[12pt]{article}
+\usepackage{enumitem}
+\textwidth=7in
+\textheight=9.5in
+\topmargin=-1in
+\headheight=0in
+\headsep=.5in
+\hoffset  -.85in
+
+\pagestyle{empty}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\begin{document}
+
+\begin{center}
+Project 1 
+\end{center}
+
+\setlength{\unitlength}{1in}
+
+\begin{picture}(6,.1) 
+\put(0,0) {\line(1,0){6.25}}         
+\end{picture}
+
+\section{Reserve Price}
+Let's extend our Monte Carlo simulation of the ascending clock auction to allow the seller to choose a reserve price. A reserve price is the minimum price a seller is willing to accept to sell the item. If the final clock price is below the reserve price the seller receives zero revenue. 
+
+For this assignment, assume the following parameters:
+\begin{enumerate}
+  \item There are 5 buyers
+  \item Buyer values are drawn between 0 and 100 in increments of 5
+  \item Seller reserve prices are allowed to be between 0 and 100 in increments of 5
+  \item The item is considered sold when the clock price is greater than or equal to the reserve price
+  \item The auctions ending rules have now changed. The auction ends when either there are zero buyers bidding at the current clock price, or there is one buyer bidding and the reserve price has been met. 
+  \item In the case of two buyers dropping out at the same price, you can go back to the previous price and randomly choose the winning buyer (if there is a winner).
+\end{enumerate}
+
+What reserve price should the seller choose (which price generates the most revenue)? Provide an illustration that supports your result. 
+
+\section{Vegas Hotel Projections}
+You are tasked with forecasting the profits of a Vegas hotel. You come up with the following model:
+\begin{equation}
+  \pi(t) = (750 + 50t)/(n + 1)
+\end{equation}
+where $\pi(t)$ is the profit in year $t$, and $n$ is the number of hotels the main competitor owns.
+
+We want to forecast the expected total profit over the next $T$ years, given the following rules:
+\begin{itemize}
+	\item You begin in year 1.
+	\item The main competitor currently has no hotels.
+	\item They can only build one hotel at a time.
+\end{itemize}
+You can set $T = 10$, $m = 2$. To run Monte Carlo simulations of the profit, you will need to randomly generate the number of hotels the competitor has each year. An example of a valid construction profile is: $\{0,1,1,2,2,2,3,3,3,3\}$. This can be read the following way:
+\begin{itemize}
+	\item The competitor begins building on the first year and finishes construction on the second (at that point it counts as a built hotel).
+	\item The competitor starts another immediately after (year 3).
+	\item Finally, they start a third hotel in year 6.
+\end{itemize}
+To be valid, the profile must be of length T and increment by at most one every other element (for m = 2). In the above example, the total profit over the 10 years is 3850. Find the expected profit. (Note: I will be lenient with how you sample from the space of possible competitor build profiles. Preferably, each possible profile will be equally likely.)
+
+\section{Conway's Game of Life}
+Conway's Game of Life is a "game" with a simple set of rules that yields complex results. It works as follows:
+\begin{itemize}
+	\item There is an NxN matrix of alive and dead cells, typically by 1's and 0's, respectively
+	\item Each cell has 8 surrounding neighbors. Cells on the edge and the corners wrap around to the other side.
+	\item Each period, the cells update according to the following rules:
+	\begin{itemize}
+		\item If a dead cell has exactly 3 alive neighbors next to it, it becomes alive.
+		\item If an alive cell has either 2 or 3 alive neighbors next to it, it remains alive.
+		\item If an live cell has fewer than 2 alive neighbors next to it, it dies of loneliness.
+		\item If an alive cell has more than 3 alive neighbors next to it, it dies of overcrowding. Such is life.
+	\end{itemize}
+	\item The cells should be updated independently. So, If I am a cell, and my neighbor is currently dead it must be counted as dead to me this period, even if it turns out it will be alive next period.
+\end{itemize}
+
+Program the Game of Life. Run a test by creating a 4x4 matrix with only the 4 corners alive. The four cells should remain stationary. After the test is working, create a 50x50 matrix with each cell randomly turned on or off. Run it for 100 periods. Plot it using matplotlib.pyplot.matshow. There are many ways to display the 100 matrix plots and I will leave it up to you to find an elegant solution.
+
+\end{document}
